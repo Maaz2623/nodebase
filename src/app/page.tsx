@@ -11,6 +11,8 @@ const HomePage = () => {
 
   const queryClient = useQueryClient();
 
+  const testAi = useMutation(trpc.testAi.mutationOptions());
+
   const create = useMutation(
     trpc.createWorkflow.mutationOptions({
       onSuccess: () => {
@@ -24,6 +26,9 @@ const HomePage = () => {
       {JSON.stringify(data)}
       <Button disabled={create.isPending} onClick={() => create.mutate()}>
         Create Workflow
+      </Button>
+      <Button disabled={testAi.isPending} onClick={() => testAi.mutate()}>
+        Test Ai
       </Button>
     </div>
   );
