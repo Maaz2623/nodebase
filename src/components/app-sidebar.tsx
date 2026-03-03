@@ -23,6 +23,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { useHasActiveSubsciption } from "@/features/subscriptions/hooks/use-subscription";
 
 const menuItems = [
   {
@@ -51,6 +52,8 @@ export const AppSidebar = () => {
   const router = useRouter();
 
   const pathname = usePathname();
+
+  const { isLoading, hasActiveSubsciption } = useHasActiveSubsciption();
 
   return (
     <Sidebar collapsible="icon">
@@ -95,21 +98,29 @@ export const AppSidebar = () => {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              tooltip={`Upgrade To Pro`}
-              className="gap-x-4 h-10 px-4"
-              onClick={() => {}}
-            >
-              <StarIcon className="h-4 w-4" />
-              <span>Upgrade to PRo</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          {!hasActiveSubsciption && !isLoading && (
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                tooltip={`Upgrade To Pro`}
+                className="gap-x-4 h-10 px-4"
+                onClick={() => {
+                  authClient.checkout({
+                    slug: "pro",
+                  });
+                }}
+              >
+                <StarIcon className="h-4 w-4" />
+                <span>Upgrade to PRo</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )}
           <SidebarMenuItem>
             <SidebarMenuButton
               tooltip={`Billing Portal`}
               className="gap-x-4 h-10 px-4"
-              onClick={() => {}}
+              onClick={() => {
+                authClient.customer.portal();
+              }}
             >
               <CreditCardIcon className="h-4 w-4" />
               <span>Billing Portal</span>
