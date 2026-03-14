@@ -51,7 +51,7 @@ export const workflowsRouter = createTRPCRouter({
       }),
     )
     .query(({ ctx, input }) => {
-      prisma.workflow.findUnique({
+      return prisma.workflow.findUnique({
         where: {
           id: input.id,
           userId: ctx.auth.user.id,
@@ -59,7 +59,7 @@ export const workflowsRouter = createTRPCRouter({
       });
     }),
   getMany: protectedProcedure.query(({ ctx }) => {
-    prisma.workflow.findMany({
+    return prisma.workflow.findMany({
       where: {
         userId: ctx.auth.user.id,
       },
