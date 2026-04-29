@@ -1,9 +1,10 @@
 "use client";
 
-import { Node, NodeProps } from "@xyflow/react";
-import { memo } from "react";
+import { Node, NodeProps, useReactFlow } from "@xyflow/react";
+import { memo, useState } from "react";
 import { BaseExecutionNode } from "../base-execution-node";
 import { GlobeIcon } from "lucide-react";
+import { FormType, HttpRequestDialog } from "./http-request-dialog";
 
 type HttpRequestNodeData = {
   endpoint?: string;
@@ -15,6 +16,31 @@ type HttpRequestNodeData = {
 type HttpRequestNodeType = Node<HttpRequestNodeData>;
 
 export const HttpRequestNode = memo((props: NodeProps<HttpRequestNodeType>) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const nodeStatus = "initial";
+  const { setNodes } = useReactFlow();
+
+  const handleOpenSettings = () => setDialogOpen(true);
+
+  const handleSubmit = (values: FormType) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (node.id === props.id) {
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              endpoint: values.endpoint,
+              method: values.method,
+              body: values.body,
+            },
+          };
+        }
+        return node;
+      }),
+    );
+  };
+
   const nodeData = props.data as HttpRequestNodeData;
   const description = nodeData?.endpoint
     ? `${nodeData.method || "GET"}: ${nodeData.endpoint}`
@@ -22,14 +48,23 @@ export const HttpRequestNode = memo((props: NodeProps<HttpRequestNodeType>) => {
 
   return (
     <>
+      <HttpRequestDialog
+        onSubmit={handleSubmit}
+        defaultEndpoint={nodeData.endpoint}
+        defaultMethod={nodeData.method}
+        defaultBody={nodeData.body}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
       <BaseExecutionNode
         {...props}
-        onSettings={() => {}}
-        onDoubleClick={() => {}}
+        onSettings={handleOpenSettings}
+        onDoubleClick={handleOpenSettings}
         id={props.id}
         icon={GlobeIcon}
         name={`HTTP Request`}
         description={description}
+        status={nodeStatus}
       />
     </>
   );
