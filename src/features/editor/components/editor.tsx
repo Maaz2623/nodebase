@@ -18,12 +18,14 @@ import {
   MiniMap,
   Panel,
 } from "@xyflow/react";
-
+// @ts-ignore
 import "@xyflow/react/dist/style.css";
 import { useCallback, useMemo, useState } from "react";
 import { AddNodeButton } from "./add-node-button";
 import { NodeType } from "@/generated/prisma/enums";
 import { ExecuteWorkflowButton } from "./execute-workflow-button";
+import { useSetAtom } from "jotai";
+import { editorAtom } from "@/components/store/atoms";
 
 export const EditorLoading = () => {
   return <LoadingView message="Loading editor..." />;
@@ -45,6 +47,8 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
 
   const [nodes, setNodes] = useState<Node[]>(workflow.nodes);
   const [edges, setEdges] = useState<Edge[]>(workflow.edges);
+
+  const setEditor = useSetAtom(editorAtom);
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) =>
@@ -78,6 +82,11 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
         proOptions={{
           hideAttribution: true,
         }}
+        onInit={setEditor}
+        snapGrid={[10, 10]}
+        snapToGrid
+        // panOnScroll
+        // panOnDrag={false}
       >
         <Background />
         <Controls />
