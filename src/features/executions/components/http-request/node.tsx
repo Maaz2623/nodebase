@@ -8,6 +8,12 @@ import {
   HttpRequestFormValues,
   HttpRequestDialog,
 } from "./http-request-dialog";
+import { useNodeStatus } from "../../hooks/use-node-status";
+import {
+  HTTP_REQUEST_CHANNEL_NAME,
+  httpRequestChannel,
+} from "@/inngest/channels/http-request";
+import { fetchHttpRequestRealtimToken } from "./actions";
 
 type HttpRequestNodeData = {
   variableName?: string;
@@ -21,7 +27,12 @@ type HttpRequestNodeType = Node<HttpRequestNodeData>;
 
 export const HttpRequestNode = memo((props: NodeProps<HttpRequestNodeType>) => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const nodeStatus = "initial";
+  const nodeStatus = useNodeStatus({
+    nodeId: props.id,
+    channel: HTTP_REQUEST_CHANNEL_NAME,
+    topic: "status",
+    refreshToken: fetchHttpRequestRealtimToken,
+  });
   const { setNodes } = useReactFlow();
 
   const handleOpenSettings = () => setDialogOpen(true);

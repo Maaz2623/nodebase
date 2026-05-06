@@ -17,6 +17,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.74.0(react@19.2.3))
+      '@inngest/realtime':
+        specifier: ^0.4.7
+        version: 0.4.7(@opentelemetry/core@2.7.1(@opentelemetry/api@1.9.1))(express@5.2.1)(hono@4.12.16)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(zod@4.4.1)
       '@paralleldrive/cuid2':
         specifier: ^3.3.0
         version: 3.3.0
@@ -911,6 +914,13 @@ packages:
 
   '@inngest/ai@0.1.7':
     resolution: {integrity: sha512-5xWatW441jacGf9czKEZdgAmkvoy7GS2tp7X8GSbdGeRXzjisHR6vM+q8DQbv6rqRsmQoCQ5iShh34MguELvUQ==}
+
+  '@inngest/realtime@0.4.7':
+    resolution: {integrity: sha512-CtmQFXlhtR0DHOJ5KngTSsk5lJXgr+Ro25HaAtdZjvDJjzo9tS0ut5e5SpGClUZkSBqdvpIKw8VBLonJ5j1JqQ==}
+    deprecated: This package is deprecated. Realtime functionality is now built into the inngest package.
+    peerDependencies:
+      react: '>=18.0.0'
+      zod: ^3.25.0 || ^4.0.0
 
   '@inquirer/ansi@2.0.5':
     resolution: {integrity: sha512-doc2sWgJpbFQ64UflSVd17ibMGDuxO1yKgOgLMwavzESnXjFWJqUeG8saYosqKpHp4kWiM5x1nXvEjbpx90gzw==}
@@ -6396,6 +6406,28 @@ snapshots:
     dependencies:
       '@types/node': 22.19.17
       typescript: 5.9.3
+
+  '@inngest/realtime@0.4.7(@opentelemetry/core@2.7.1(@opentelemetry/api@1.9.1))(express@5.2.1)(hono@4.12.16)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)(typescript@5.9.3)(zod@4.4.1)':
+    dependencies:
+      '@standard-schema/spec': 1.1.0
+      debug: 4.4.3
+      inngest: 3.54.2(@opentelemetry/core@2.7.1(@opentelemetry/api@1.9.1))(express@5.2.1)(hono@4.12.16)(next@16.1.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(typescript@5.9.3)(zod@4.4.1)
+      react: 19.2.3
+      zod: 4.4.1
+    transitivePeerDependencies:
+      - '@opentelemetry/core'
+      - '@sveltejs/kit'
+      - '@vercel/node'
+      - aws-lambda
+      - encoding
+      - express
+      - fastify
+      - h3
+      - hono
+      - koa
+      - next
+      - supports-color
+      - typescript
 
   '@inquirer/ansi@2.0.5': {}
 
