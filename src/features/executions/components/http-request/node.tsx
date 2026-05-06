@@ -10,6 +10,7 @@ import {
 } from "./http-request-dialog";
 
 type HttpRequestNodeData = {
+  variableName?: string;
   endpoint?: string;
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: string;
