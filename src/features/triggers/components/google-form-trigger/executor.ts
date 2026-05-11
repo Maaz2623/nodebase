@@ -15,6 +15,7 @@ export const googleFormTriggerExecutor: NodeExecutor<
 
   const result = await step.run("google-form-trigger", async () => context);
 
+await step.sleep("delay", "10s")
   await publish(
     googleFormTriggerChannel().status({
       nodeId,
