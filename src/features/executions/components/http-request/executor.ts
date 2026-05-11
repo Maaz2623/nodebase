@@ -5,10 +5,10 @@ import Handlebars from "handlebars";
 import { httpRequestChannel } from "@/inngest/channels/http-request";
 
 type HttpRequestData = {
-  endpoint: string;
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+  endpoint?: string;
+  method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   body?: string;
-  variableName: string;
+  variableName?: string;
 };
 
 Handlebars.registerHelper("json", (context) => {
@@ -32,7 +32,11 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
     }),
   );
 
-  if (!data.endpoint) {
+  
+  await step.sleep("delay", "10s");
+  try {
+    const result = step.run("http-request", async () => {
+      if (!data.endpoint) {
     await publish(
       httpRequestChannel().status({
         nodeId,
@@ -61,9 +65,6 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
     );
     throw new NonRetriableError("Method not configured");
   }
-  await step.sleep("delay", "10s");
-  try {
-    const result = step.run("http-request", async () => {
       const endpoint = Handlebars.compile(data.endpoint)(context);
       const method = data.method || "GET";
 
