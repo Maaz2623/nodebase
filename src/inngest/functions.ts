@@ -12,7 +12,7 @@ import { geminiChannel } from "./channels/gemini";
 
 export const executeWorkflow = inngest.createFunction(
   {
-    retries: 0,
+    retries: process.env.NODE_ENV === "production" ? 3 : 0,
     id: "execute-workflow",
   },
   {
