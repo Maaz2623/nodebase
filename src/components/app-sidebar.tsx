@@ -34,16 +34,7 @@ const menuItems = [
         icon: FolderOpenIcon,
         url: "/workflows",
       },
-      {
-        title: "Credentials",
-        icon: KeyIcon,
-        url: "/credentials",
-      },
-      {
-        title: "Executions",
-        icon: HistoryIcon,
-        url: "/executions",
-      },
+     
     ],
   },
 ];
